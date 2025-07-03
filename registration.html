@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration</title>
+    <link rel="stylesheet" href="registration.css">
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" href="/assets/wctm.png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-user-graduate"></i> Student Registration</h1>
+        </div>
+        <form method="post" action="https://formspree.io/f/xyzebpqe">
+        <div class="form-container">
+            <form class="registration-form">
+                <!-- Personal Information Section -->
+                <div class="form-section">
+                    <h2><i class="fas fa-user"></i> Personal Information</h2>
+                    
+                    <div class="form-group">
+                        <label for="fullname">Full Name</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-signature"></i>
+                            <input type="text" id="fullname" name="fullname" placeholder="Enter your full name" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fathername">Father's Name</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-user-friends"></i>
+                            <input type="text" id="fathername" name="fathername" placeholder="Enter father's name" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="age">Age</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-birthday-cake"></i>
+                            <input type="number" id="age" name="age" placeholder="Enter your age" min="16" max="60">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Academic Information Section -->
+                <div class="form-section">
+                    <h2><i class="fas fa-book"></i> Academic Information</h2>
+                    
+                    <div class="form-group">
+                        <label for="course">Select Course</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                            <select id="course" name="course" required>
+                                <option value="">-- Choose your course --</option>
+                                <option value="btech">BTECH</option>
+                                <option value="mtech">MTECH</option>
+                                <option value="bca">BCA</option>
+                                <option value="mca">MCA</option>
+                                <option value="mba">MBA</option>
+                                <option value="bba">BBA</option>
+                                <option value="diploma">Diploma</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fee">Fee Type</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                            <select id="fee" name="fee" required>
+                                <option value="">-- Select fee type --</option>
+                                <option value="transport">Transport Fee</option>
+                                <option value="tuition">Tuition Fee</option>
+                                <option value="hostel">Hostel Fee</option>
+                                <option value="library">Library Fee</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Buttons -->
+                <div class="button-group">
+                    <button type="submit" class="btn btn-submit">
+                        <i class="fas fa-paper-plane"></i> Submit
+                    </button>
+                    <button type="reset" class="btn btn-reset">
+                        <i class="fas fa-undo"></i> Reset
+                    </button>
+                </div>
+        </div>
+    </form>
+    </div>
+</body>
+</html>

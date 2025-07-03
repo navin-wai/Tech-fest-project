@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WCTM Premium Gallery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="/assets/wctm.png">
+    <style>
+        :root {
+            --primary: #1c2957;
+            --secondary: #ffb81c;
+            --neon-glow: 0 0 20px #ffb81c, 0 0 40px rgba(255, 184, 28, 0.5);
+            --fast-transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --slow-transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, 
+                rgba(28, 41, 87, 0.95) 0%, 
+                rgba(28, 41, 87, 0.85) 50%, 
+                rgba(255, 184, 28, 0.15) 100%);
+            background-attachment: fixed;
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: white;
+            overflow-x: hidden;
+            
+        }
+        
+        /* Custom Cursor */
+      
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .gallery-section {
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 100px 20px;
+            position: relative;
+        }
+        
+        .gallery-header {
+            text-align: center;
+            margin-bottom: 80px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .gallery-title {
+            font-size: 6rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ffb81c 0%, #ffd700 50%, #ffffff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 4px 20px rgba(28, 41, 87, 0.3);
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+            display: inline-block;
+            position: relative;
+            transition: var(--slow-transition);
+            text-transform: uppercase;
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes titleGlow {
+            0% { text-shadow: 0 0 10px rgba(255, 184, 28, 0.5); }
+            100% { text-shadow: 0 0 30px rgba(255, 184, 28, 0.9), 0 0 60px rgba(255, 184, 28, 0.5); }
+        }
+        
+        .gallery-title:hover {
+            transform: scale(1.05);
+            letter-spacing: 8px;
+        }
+        
+        .title-decoration {
+            position: absolute;
+            width: 300px;
+            height: 8px;
+            background: linear-gradient(90deg, transparent, #ffb81c, transparent);
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 3px;
+            box-shadow: 0 0 30px rgba(255, 184, 28, 0.7);
+            transition: var(--slow-transition);
+            filter: blur(1px);
+        }
+        
+        .gallery-title:hover ~ .title-decoration {
+            width: 400px;
+            height: 10px;
+            background: linear-gradient(90deg, transparent, #ffffff, transparent);
+            box-shadow: var(--neon-glow);
+            filter: blur(0);
+        }
+        
+        .gallery-subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.8rem;
+            max-width: 900px;
+            margin: 40px auto 0;
+            line-height: 1.6;
+            font-weight: 400;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 50px;
+            margin-top: 80px;
+            perspective: 2000px;
+        }
+        
+        .gallery-item {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
+            transition: var(--fast-transition);
+            transform-style: preserve-3d;
+            will-change: transform;
+            aspect-ratio: 1/1;
+            background: linear-gradient(45deg, var(--primary), #2a3a6e);
+            border: 1px solid rgba(255, 184, 28, 0.3);
+            cursor: pointer;
+        }
+        
+        .gallery-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, 
+                rgba(28, 41, 87, 0.4) 0%, 
+                rgba(255, 184, 28, 0.1) 100%);
+            z-index: 1;
+            transition: var(--fast-transition);
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-20px) rotateX(5deg) rotateY(5deg) scale(1.05);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), var(--neon-glow);
+            border: 1px solid rgba(255, 184, 28, 0.8);
+        }
+        
+        .gallery-item:hover::before {
+            background: linear-gradient(135deg, 
+                rgba(28, 41, 87, 0.2) 0%, 
+                rgba(255, 184, 28, 0.05) 100%);
+        }
+        
+        .media-content {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: var(--fast-transition);
+            transform-origin: center;
+            will-change: transform;
+        }
+        
+        .gallery-item:hover .media-content {
+            transform: scale(1.15);
+        }
+        
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(28,41,87,0.95) 0%, transparent 100%);
+            color: white;
+            padding: 40px;
+            transform: translateY(100%);
+            transition: var(--fast-transition);
+            backdrop-filter: blur(15px);
+            z-index: 2;
+            border-top: 1px solid rgba(255, 184, 28, 0.5);
+        }
+        
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+        
+        .gallery-caption h3 {
+            margin: 0 0 20px 0;
+            font-size: 2rem;
+            color: var(--secondary);
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+        
+        .gallery-caption p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .play-button {
+            display: inline-block;
+            background: var(--secondary);
+            color: var(--primary);
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-top: 15px;
+            transition: var(--fast-transition);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .gallery-item:hover .play-button {
+            background: white;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        
+        .media-icon {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: rgba(28, 41, 87, 0.8);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+            backdrop-filter: blur(8px);
+            z-index: 3;
+            transition: var(--fast-transition);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        
+        .gallery-item:hover .media-icon {
+            background: var(--secondary);
+            color: var(--primary);
+            box-shadow: var(--neon-glow);
+            transform: scale(1.2) rotate(15deg);
+            border: 1px solid var(--primary);
+        }
+        
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(28, 41, 87, 0.5);
+            transition: var(--fast-transition);
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .video-overlay i {
+            font-size: 5rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 0 0 30px rgba(255, 184, 28, 0.9);
+            transition: var(--fast-transition);
+        }
+        
+        .gallery-item:hover .video-overlay {
+            background: rgba(28, 41, 87, 0.2);
+        }
+        
+        .gallery-item:hover .video-overlay i {
+            color: var(--secondary);
+            transform: scale(1.4);
+            text-shadow: var(--neon-glow);
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 99999;
+            overflow: auto;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+        }
+        
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+            animation: modalFadeIn 0.4s ease;
+        }
+        
+        @keyframes modalFadeIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        
+        .modal-media {
+            max-width: 100%;
+            max-height: 80vh;
+            border-radius: 10px;
+            box-shadow: 0 0 50px rgba(255, 184, 28, 0.5);
+            border: 2px solid var(--secondary);
+        }
+        
+        .modal-video {
+            width: 800px;
+            height: 450px;
+            border: none;
+            border-radius: 10px;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 3rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--fast-transition);
+            z-index: 10;
+        }
+        
+        .close-modal:hover {
+            color: var(--secondary);
+            transform: rotate(90deg);
+        }
+        
+        /* Floating particles background */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .particle {
+            position: absolute;
+            background: rgba(255, 184, 28, 0.7);
+            border-radius: 50%;
+            filter: blur(1px);
+            animation: float linear infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-100vh) rotate(360deg); }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1400px) {
+            .gallery-title {
+                font-size: 5rem;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .gallery-section {
+                padding: 80px 15px;
+            }
+            
+            .gallery-title {
+                font-size: 4rem;
+            }
+            
+            .title-decoration {
+                width: 250px;
+                bottom: -25px;
+            }
+            
+            .gallery-title:hover ~ .title-decoration {
+                width: 300px;
+            }
+            
+            .gallery-subtitle {
+                font-size: 1.5rem;
+            }
+            
+            .gallery-grid {
+                gap: 30px;
+            }
+            
+            .modal-video {
+                width: 90vw;
+                height: calc(90vw * 9/16);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .gallery-title {
+                font-size: 3rem;
+                letter-spacing: 3px;
+            }
+            
+            .gallery-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                gap: 25px;
+            }
+            
+            .gallery-caption {
+                padding: 25px;
+            }
+            
+            .gallery-caption h3 {
+                font-size: 1.5rem;
+            }
+            
+            .cursor, .cursor-follower {
+                display: none;
+            }
+            
+            body {
+                cursor: default;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .gallery-title {
+                font-size: 2.5rem;
+            }
+            
+            .gallery-subtitle {
+                font-size: 1rem;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .gallery-caption {
+                padding: 20px;
+            }
+            
+            .gallery-caption h3 {
+                font-size: 1.3rem;
+                margin-bottom: 10px;
+            }
+            
+            .gallery-caption p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+    
+    <!-- Floating particles background -->
+    <div class="particles" id="particles"></div>
+    
+    <!-- Modal -->
+    <div class="modal" id="mediaModal">
+        <span class="close-modal">&times;</span>
+        <div class="modal-content" id="modalContent">
+            <!-- Content will be inserted here -->
+        </div>
+    </div>
+    
+    <section class="gallery-section">
+        <div class="gallery-header">
+            <h1 class="gallery-title">WCTM GALLERY</h1>
+            <div class="title-decoration"></div>
+            <p class="gallery-subtitle">Experience the vibrant legacy of WCTM through our premium collection of moments and memories</p>
+        </div>
+        
+        <div class="gallery-grid">
+            <!-- Photo 1 -->
+            <div class="gallery-item" data-media-type="image" src="images/DSC04170.JPG" data-src="IMG20250228143121.jpg">
+                <img class="media-content" src="/assets/study.avif" alt="Classroom Session">
+                <div class="gallery-caption">
+                    <h3>Study Session</h3>
+                    <p>Students engaged in an interactive classroom learning session.</p>
+                </div>
+                <div class="media-icon">
+                    <i class="fas fa-graduation-cap"></i> 
+                </div>
+            </div>
+            
+            <!-- Video 1 -->
+            <div class="gallery-item" data-media-type="video" data-src="https://www.youtube-nocookie.com/embed/44R7YVM_X1w?si=iqLV5LgF5zCIwQIv" allowfullscreen></iframe>">
+                <div class="video-overlay">
+                    <i class="fas fa-play"></i>
+                </div>
+                <img class="media-content" src="/assets/sonunigam1.png">
+                <div class="gallery-caption">
+                    <h3>Sonu Nigam Live</h3>
+                    <p>Magical performance at WCTM's 15th Annual Cultural Festival</p>
+                    <span class="play-button">Watch Now</span>
+                </div>
+                <div class="media-icon">
+                    <i class="fas fa-music"></i>
+                </div>
+            </div>
+            
+            <!-- Photo 2 -->
+            <div class="gallery-item" data-media-type="image" src="suketuwctm.jpg" data-src="suketu.jpg">
+                <img class="media-content" src="/assets/suketuwctm.jpg" alt="Campus Event">
+                <div class="gallery-caption">
+                    <h3>Freshers' Night 2024:</h3>
+                    <p> Suketu’s Beats x WCTM Heat! Where New Beginnings Meet Bass Drops!</p>
+                </div>
+                <div class="media-icon">
+                    <i class="fas fa-theater-masks"></i>
+                </div>
+            </div>
+            
+            <!-- Video 2 -->
+            <div class="gallery-item" data-media-type="video" data-src="https://www.youtube.com/embed/mjISVv073Hs?si=_2qEgNK1v4nAG37c">
+                <div class="video-overlay">
+                    <i class="fas fa-play"></i>
+                </div>
+                <img class="media-content" src="https://tse1.mm.bing.net/th?id=OIP.6YihCXpbgYw3wILd1tG9YgHaED&pid=Api&P=0&h=220" alt="Sonu Nigam Performance">
+                <div class="gallery-caption">
+                    <h3>Sonu Nigam Encore</h3>
+                    <p>Enchanting melodies from our 2025 Convocation Ceremony</p>
+                    <span class="play-button">Watch Now</span>
+                </div>
+                <div class="media-icon">
+                    <i class="fas fa-headphones"></i>
+                </div>
+            </div>
+            
+            <!-- Photo 3 -->
+            <div class="gallery-item" data-media-type="image" src="https://www.wctmgurgaon.com/images/wctm_banner0104.jpg" data-src="https://www.wctmgurgaon.com/images/wctm_banner0104.jpg"  >
+                <img class="media-content" src="http://www.wctmgurgaon.com/blog/wp-content/uploads/2023/12/Innovation-at-WCTM-Bridging-Gaps-with-Robotics-and-Artificial-Intelligence-768x576.jpg" alt="Research Lab">
+                <div class="gallery-caption">
+                    <h3>Innovation Lab</h3>
+                    <p>Students working on groundbreaking research projects</p>
+                </div>
+                <div class="media-icon">
+                    <i class="fas fa-flask"></i>
+                </div>
+            </div>
+            
+            <!-- Video 3 -->
+            <div class="gallery-item" data-media-type="video" data-src="https://www.youtube.com/embed/py078uvSyU4?si=4CVsJ_Si9Vge61Ek">
+                <div class="video-overlay">
+                    <i class="fas fa-play"></i>
+                </div>
+                <img class="media-content" src="https://tse1.mm.bing.net/th?id=OIP.JFFyHxTX5KVxBnpRDVdwmgHaE8&pid=Api&P=0&h=220" alt="Campus Tour">
+                <div class="gallery-caption">
+                    <h3>Campus Tour</h3>
+                    <p>Explore our state-of-the-art facilities and beautiful campus</p>
+                    <span class="play-button">Watch Now</span>
+                </div>
+                <div class="media-icon">
+                    <i class="fas fa-video"></i>
+                </div>
+            </div>
+            
+            <!-- Photo 4 -->
+            <div class="gallery-item" data-media-type="image"   data-src="https://i.ytimg.com/vi/MmmUUHmsdvA/hq2.jpg?sqp=-oaymwEoCOADEOgC8quKqQMcGADwAQH4AbYIgAK4CIoCDAgAEAEYfyA1KD0wDw==&rs=AOn4CLC4pjwH3OzOSN03utL1vTLx2EbYgw">
+                <img class="media-content" src="https://i.ytimg.com/vi/4XJeOchj7uQ/maxres2.jpg?sqp=-oaymwEoCIAKENAF8quKqQMcGADwAQH4AbYIgAK4CIoCDAgAEAEYEyBDKH8wDw==&rs=AOn4CLAZKtqaqxzSrY6kiHx-EetJmLYkeA " alt="Sports Day">
+                <div class="gallery-caption">
+                    <h3>Sports Championship</h3>
+                    <p>Annual inter-college sports competition winners</p>
+                </div>
+                <div class="media-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+            </div>
+            
+            <!-- Video 4 -->
+            <div class="gallery-item" data-media-type="video" data-src="https://www.youtube.com/embed/UR8ODFVW6F0?si=3sfY0elDObPCjWk0">
+                <div class="video-overlay">
+                    <i class="fas fa-play"></i>
+                </div>
+                <img class="media-content" src="https://fs-courses.com/images/techfest/2023/banner-techfest.png" alt="Tech Fest">
+                <div class="gallery-caption">
+                    <h3>Tech Fest 2023</h3>
+                    <p>Highlights from our annual technology festival</p>
+                    <span class="play-button">Watch Now</span>
+                </div>
+                <div class="media-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+            </div>
+            
+            <!-- Photo 5 -->
+            <div class="gallery-item" data-media-type="image" data-src="https://www.wctmgurgaon.com/blog/wp-content/uploads/2022/05/280527954_3132692443648198_1102119206223596723_n-800x600.jpg">
+                <img class="media-content" src="https://www.wctmgurgaon.com/blog/wp-content/uploads/2022/05/280527954_3132692443648198_1102119206223596723_n-800x600.jpg" alt="Group Project">
+                <div class="gallery-caption">
+                    <h3>Team Projects</h3>
+                    <p>Collaborative learning in our state-of-the-art facilities</p>
+                </div>
+                <div class="media-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+            </div>
+            
+            <!-- Video 5 -->
+            <div class="gallery-item" data-media-type="video" data-src="https://www.youtube.com/embed/BrK2SU4lL3c?si=dqae9bMy6qBm2YA-">
+                <div class="video-overlay">
+                    <i class="fas fa-play"></i>
+                </div>
+                <img class="media-content" src="https://th.bing.com/th/id/OIG2.M50DqyRg7zwbbmrR3YQ9?w=1024&h=1024&rs=1&pid=ImgDetMain" alt="Convocation">
+                <div class="gallery-caption">
+                    <h3> Fresher's 2025</h3>
+                    <p>A night of joy, music, and unforgettable memories for the new batch of WCTM.</p>
+                    <span class="play-button">Watch Now</span>
+                </div>
+                <div class="media-icon">
+                    <i class="fas fa-user-graduate"></i>
+                </div>
+            </div>
+            
+            <!-- Photo 6 -->
+            <div class="gallery-item" data-media-type="image" data-src="https://www.wctmgurgaon.com/images/library-3.jpg">
+                <img class="media-content" src="https://www.wctmgurgaon.com/images/library-3.jpg" alt="Library">
+                <div class="gallery-caption">
+                    <h3>facilities</h3>
+                    <p>Students accessing our vast collection of resources</p>
+                </div>
+                <div class="media-icon">
+                    <i class="fas fa-book"></i>
+                </div>
+            </div>
+            
+            <!-- Video 6 -->
+            <div class="gallery-item" data-media-type="video" data-src="https://www.youtube.com/embed/ELVQa3p0HaE?si=qvsiHJj11hBN0D9Q">
+                <div class="video-overlay">
+                    <i class="fas fa-play"></i>
+                </div>
+                <img class="media-content" src="https://th.bing.com/th/id/OIG3.Kz2ZC8i1JsGibvrH2oZI?w=1024&h=1024&rs=1&pid=ImgDetMain" alt="Guest Lecture">
+                <div class="gallery-caption">
+                    <h3>Annual sports fest </h3>
+                    <p>Bgmi(Battle ground's mobile india)</p>
+                    <span class="play-button">Watch Now</span>
+                </div>
+                <div class="media-icon">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                </div>
+            </div>
+            
+            <!-- Photo 7 removed by Mr.nayan -->
+           
+            
+            <!-- Video 7 -->
+            <div class="gallery-item" data-media-type="video" data-src="https://www.youtube.com/embed/zf668fbQsGI?si=XNakwdeNUrl-CvGt">
+                <div class="video-overlay">
+                    <i class="fas fa-play"></i>
+                </div>
+                <img class="media-content" src="https://th.bing.com/th/id/OIG1.Lh.WExjl7h2ZWkl34iE0?w=1024&h=1024&rs=1&pid=ImgDetMain" alt="Hackathon">
+                <div class="gallery-caption">
+                    <h3>Hackathon 2023</h3>
+                    <p>48 hours of coding and innovation</p>
+                    <span class="play-button">Watch Now</span>
+                </div>
+                <div class="media-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+            </div>
+            
+            <!-- Photo 8 -->
+            <div class="gallery-item" data-media-type="image" data-src="https://www.wctmgurgaon.com/blog/wp-content/uploads/2022/07/291809592_3173140599603382_315475266231376193_n.jpg">
+                <img class="media-content" src="https://th.bing.com/th/id/OIG2.FWdgX3X70v0rBj1WAmco?w=1024&h=1024&rs=1&pid=ImgDetMain" alt="Student Council">
+                <div class="gallery-caption">
+                    <h3>Student Council</h3>
+                    <p>Our student leaders organizing campus events</p>
+                </div>
+                <div class="media-icon">
+                    <i class="fas fa-users-cog"></i>
+                </div>
+            </div>
+            
+            <!-- Video 8 -->
+            <div class="gallery-item" data-media-type="video" data-src="https://www.youtube.com/embed/aUFuTTWGy4k?si=XpZYJk4iFUVP_5eD" ">
+                <div class="video-overlay">
+                    <i class="fas fa-play"></i>
+                </div>
+                <img class="media-content" src="https://th.bing.com/th/id/OIG3.9F2iBgqZPkXiJ5jFz0IC?w=1024&h=1024&rs=1&pid=ImgDetMain" alt="Alumni Talk">
+                <div class="gallery-caption">
+                    <h3>Life at WCTM</h3>
+                    <p>Student life at WCTM is a blend of learning, growth, and unforgettable experiences.</p>
+                    <span class="play-button">Watch Now</span>
+                </div>
+                <div class="media-icon">
+                    <i class="fas fa-handshake"></i>
+                </div>
+            </div>
+            
+            <!-- Photo 9 -->
+            <div class="gallery-item" data-media-type="image" data-src="https://www.wctmgurgaon.com/wctm/ece-lab.jpg">
+                <img class="media-content" src="https://th.bing.com/th/id/OIG3.BXq3VdbHXtprzdMCEBYO?pid=ImgGn" alt="Lab Session">
+                <div class="gallery-caption">
+                    <h3>Lab Session</h3>
+                    <p>Hands-on learning in our advanced laboratories</p>
+                </div>
+                <div class="media-icon">
+                    <i class="fas fa-microscope"></i>
+                </div>
+            </div>
+            
+            <!-- Video 9 -->
+            <div class="gallery-item" data-media-type="video" data-src="https://www.youtube.com/embed/p44VffHDb5Q?si=RLbLDS-e7gxU-TZz">
+                <div class="video-overlay">
+                    <i class="fas fa-play"></i>
+                </div>
+                <img class="media-content" src="https://th.bing.com/th/id/OIG3.6LzRV.eNmdjasDH1OnHs?w=1024&h=1024&rs=1&pid=ImgDetMain" alt="Robotics Demo">
+                <div class="gallery-caption">
+                    <h3>Robotics Demo</h3>
+                    <p>Student-built robots in action</p>
+                    <span class="play-button">Watch Now</span>
+                </div>
+                <div class="media-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+            </div>
+            
+            <!-- Photo 10 -->
+            <div class="gallery-item" data-media-type="image" data-src="https://webcdn.worcester.edu/wp-content/uploads/2022/05/Fuller-039-scaled.jpg">
+                <img class="media-content" src="https://th.bing.com/th/id/OIG4.JDv.hpYreZg3qAZtNJyu?w=1024&h=1024&rs=1&pid=ImgDetMain" alt="Lecture Hall">
+                <div class="gallery-caption">
+                    <h3>Lecture Hall</h3>
+                    <p>Modern classrooms with advanced teaching aids</p>
+                </div>
+                <div class="media-icon">
+                    <i class="fas fa-chalkboard"></i>
+                </div>
+            </div>
+            
+            <!-- Video 10 -->
+            <div class="gallery-item" data-media-type="video" data-src="https://www.youtube.com/embed/mQ7t67mWERY?si=cyagHdeSG82YGJ3q">
+                <div class="video-overlay">
+                    <i class="fas fa-play"></i>
+                </div>
+                <img class="media-content" src="https://th.bing.com/th/id/OIG3.ggAow_qDycpRwegonY5T?w=1024&h=1024&rs=1&pid=ImgDetMain" alt="Cultural Night">
+                <div class="gallery-caption">
+                    <h3>Cultural Night</h3>
+                    <p>Highlights from our annual cultural extravaganza</p>
+                    <span class="play-button">Watch Now</span>
+                </div>
+                <div class="media-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Custom Cursor
+        const cursor = document.querySelector('.cursor');
+        const cursorFollower = document.querySelector('.cursor-follower');
+        
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            
+            // Add slight delay to follower
+            setTimeout(() => {
+                cursorFollower.style.left = e.clientX + 'px';
+                cursorFollower.style.top = e.clientY + 'px';
+            }, 100);
+        });
+        
+        // Activate cursor effects on hoverable elements
+        const hoverables = document.querySelectorAll('.gallery-item, .play-button, a, button');
+        
+        hoverables.forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                cursor.classList.add('active');
+                cursorFollower.classList.add('active');
+            });
+            
+            item.addEventListener('mouseleave', () => {
+                cursor.classList.remove('active');
+                cursorFollower.classList.remove('active');
+            });
+        });
+        
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = window.innerWidth < 768 ? 30 : 80;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random properties
+                const size = Math.random() * 15 + 5;
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100 + 100; // Start below viewport
+                const opacity = Math.random() * 0.7 + 0.3;
+                const duration = Math.random() * 40 + 20;
+                const delay = Math.random() * -40;
+                const blur = Math.random() * 2 + 1;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}%`;
+                particle.style.top = `${posY}%`;
+                particle.style.opacity = opacity;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.filter = `blur(${blur}px)`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Modal functionality
+        const modal = document.getElementById('mediaModal');
+        const modalContent = document.getElementById('modalContent');
+        const closeModal = document.querySelector('.close-modal');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        
+        function openModal(mediaType, src) {
+            modalContent.innerHTML = '';
+            
+            if (mediaType === 'image') {
+                const img = document.createElement('img');
+                img.src = src;
+                img.alt = 'Enlarged view';
+                img.classList.add('modal-media');
+                modalContent.appendChild(img);
+            } else if (mediaType === 'video') {
+                const iframe = document.createElement('iframe');
+                iframe.src = src + '?autoplay=1&rel=0';
+                iframe.classList.add('modal-video');
+                iframe.setAttribute('allowfullscreen', '');
+                iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+                modalContent.appendChild(iframe);
+            }
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeModalFunc() {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            
+            // Stop any playing videos when closing
+            const iframe = modalContent.querySelector('iframe');
+            if (iframe) {
+                iframe.src = '';
+            }
+        }
+        
+        // Event listeners for gallery items
+        galleryItems.forEach(item => {
+            const mediaType = item.getAttribute('data-media-type');
+            const src = item.getAttribute('data-src');
+            
+            // Click on item
+            item.addEventListener('click', (e) => {
+                // Don't open modal if clicking on play button
+                if (!e.target.classList.contains('play-button')) {
+                    openModal(mediaType, src);
+                }
+            });
+            
+            // Click on play button in caption
+            const playBtn = item.querySelector('.play-button');
+            if (playBtn) {
+                playBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    openModal(mediaType, src);
+                });
+            }
+            
+            // Click on video overlay
+            const videoOverlay = item.querySelector('.video-overlay');
+            if (videoOverlay) {
+                videoOverlay.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    openModal(mediaType, src);
+                });
+            }
+        });
+        
+        // Close modal
+        closeModal.addEventListener('click', closeModalFunc);
+        
+        // Close when clicking outside content
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModalFunc();
+            }
+        });
+        
+        // Close with ESC key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeModalFunc();
+            }
+        });
+        
+        // Initialize everything when DOM loads
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+        });
+        
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            document.getElementById('particles').innerHTML = '';
+            createParticles();
+        });
+    </script>
+</body>
+</html>
